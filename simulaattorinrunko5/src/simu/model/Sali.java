@@ -38,6 +38,7 @@ public class Sali extends Palvelupiste{
 	public void setEtukateisArvo(double a){
 		etukateisArvo = a;
 	}
+	
 	@Override
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		Trace.out(Trace.Level.INFO, "Lisätään asiakas: " +  jono.peekLast().getId() + " saliin");
