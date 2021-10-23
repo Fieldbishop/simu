@@ -22,6 +22,7 @@ public class Sali extends Palvelupiste{
 	private double alkamisAika = 0;
 	private double loppuAika = 0;
 	private int yleisöMaksimi;
+	private double etukateisArvo;
 	
 	public Sali(
 			Tapahtumalista tapahtumalista, 
@@ -34,6 +35,9 @@ public class Sali extends Palvelupiste{
 		this.yleisöMaksimi = saliAsetukset[2];
 	}
 
+	public void setEtukateisArvo(double a){
+		etukateisArvo = a;
+	}
 	@Override
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 		Trace.out(Trace.Level.INFO, "Lisätään asiakas: " +  jono.peekLast().getId() + " saliin");
@@ -82,7 +86,7 @@ public class Sali extends Palvelupiste{
 		
 		for(int i = 0; i < asiakkaita; i++) {
 			//negexp avulla generoidut saapumisajat tapahtumaan saapuville asiakkaille
-			double saapumisAika = saliAsiakasGenerator.sample()+10;
+			double saapumisAika = saliAsiakasGenerator.sample()+etukateisArvo;
 			Tapahtuma t = new Tapahtuma(TapahtumanTyyppi.JONOARR, alkamisAika-saapumisAika, skeduloitavanTapahtumanTyyppi);
 			tapahtumalista.lisaa(t);
 		}
