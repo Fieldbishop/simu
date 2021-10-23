@@ -30,11 +30,11 @@ public class Sali extends Palvelupiste{
 			int[] saliAsetukset) {
 		
 		super(tapahtumalista, tyyppi);
-		generator = new Normal(saliAsetukset[0],5);
+		generator = new Normal(saliAsetukset[0],saliAsetukset[0]*0.1);
 		this.odotusAika = generator.sample();
-		generator = new Normal(saliAsetukset[1],5);
+		generator = new Normal(saliAsetukset[1],saliAsetukset[1]*0.1);
 		this.tapahtumanKesto = generator.sample();
-		generator = new Normal(saliAsetukset[2],5);
+		generator = new Normal(saliAsetukset[2],saliAsetukset[2]*0.1);
 		this.yleisöMaksimi = (int) generator.sample();
 		
 	}
@@ -42,6 +42,7 @@ public class Sali extends Palvelupiste{
 	public void setEtukateisArvo(double a){
 		etukateisArvo = a;
 	}
+	
 	
 	@Override
 	public void aloitaPalvelu(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
