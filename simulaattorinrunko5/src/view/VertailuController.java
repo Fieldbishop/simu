@@ -136,6 +136,7 @@ public class VertailuController {
     
     public void setKontrolleri(IKontrolleri kontrolleri) {
     	this.kontrolleri = kontrolleri; 
+    	
     	ajo1.setItems((ObservableList<Tallennettava>) this.kontrolleri.getTulokset());
     	ajo2.setItems((ObservableList<Tallennettava>) this.kontrolleri.getTulokset());
     }
@@ -155,31 +156,31 @@ public class VertailuController {
 			kestoAjo1Sali1.setText(Integer.toString(tiedot.getAsetusKesto1()));
 			odotusAjo1Sali1.setText(Integer.toString(tiedot.getAsetusOdotusaika1()));
 			asiakkaitaAjo1Sali1.setText(Integer.toString(tiedot.getSisaanPaasseet1() + tiedot.getPoisJaaneet1()));
-			mahdollisuusAjo1Sali1.setText(String.format("%.2f", tiedot.getSisaanPaasseetPoisJaaneetSuhde1()));
-			asiakasOdotusAjo1Sali1.setText(String.format("%.2f", tiedot.getAsiakkaanOdotusAVG()));
+			mahdollisuusAjo1Sali1.setText(Double.toString(tiedot.getSisaanPaasseetPoisJaaneetSuhde1()));
+			asiakasOdotusAjo1Sali1.setText(Double.toString(tiedot.getAsiakkaanOdotusAVG()));
 			
 			//Sali 2
 			kaavioSali2 = kaavioAjo1Sali2;
 			kestoAjo1Sali2.setText(Integer.toString(tiedot.getAsetusKesto2()));
 			odotusAjo1Sali2.setText(Integer.toString(tiedot.getAsetusOdotusaika2()));
 			asiakkaitaAjo1Sali2.setText(Integer.toString(tiedot.getSisaanPaasseet2() + tiedot.getPoisJaaneet2()));
-			mahdollisuusAjo1Sali2.setText(String.format("%.2f", tiedot.getSisaanPaasseetPoisJaaneetSuhde2()));
-			asiakasOdotusAjo1Sali2.setText(String.format("%.2f", tiedot.getAsiakkaanOdotusAVG()));
+			mahdollisuusAjo1Sali2.setText(Double.toString(tiedot.getSisaanPaasseetPoisJaaneetSuhde2()));
+			asiakasOdotusAjo1Sali2.setText(Double.toString(tiedot.getAsiakkaanOdotusAVG()));
 			break;
 		case 2:
 			kaavioSali1 = kaavioAjo2Sali1;
 			kestoAjo2Sali1.setText(Integer.toString(tiedot.getAsetusKesto1()));
 			odotusAjo2Sali1.setText(Integer.toString(tiedot.getAsetusOdotusaika1()));
 			asiakkaitaAjo2Sali1.setText(Integer.toString(tiedot.getSisaanPaasseet1() + tiedot.getPoisJaaneet1()));
-			mahdollisuusAjo2Sali1.setText(String.format("%.2f", tiedot.getSisaanPaasseetPoisJaaneetSuhde1()));
-			asiakasOdotusAjo2Sali1.setText(String.format("%.2f", tiedot.getAsiakkaanOdotusAVG()));
+			mahdollisuusAjo2Sali1.setText(Double.toString(tiedot.getSisaanPaasseetPoisJaaneetSuhde1()));
+			asiakasOdotusAjo2Sali1.setText(Double.toString(tiedot.getAsiakkaanOdotusAVG()));
 			
 			kaavioSali2 = kaavioAjo2Sali2;
 			kestoAjo2Sali2.setText(Integer.toString(tiedot.getAsetusKesto2()));
 			odotusAjo2Sali2.setText(Integer.toString(tiedot.getAsetusOdotusaika2()));
 			asiakkaitaAjo2Sali2.setText(Integer.toString(tiedot.getSisaanPaasseet2() + tiedot.getPoisJaaneet2()));
-			mahdollisuusAjo2Sali2.setText(String.format("%.2f", tiedot.getSisaanPaasseetPoisJaaneetSuhde2()));
-			asiakasOdotusAjo2Sali2.setText(String.format("%.2f", tiedot.getAsiakkaanOdotusAVG()));
+			mahdollisuusAjo2Sali2.setText(Double.toString(tiedot.getSisaanPaasseetPoisJaaneetSuhde2()));
+			asiakasOdotusAjo2Sali2.setText(Double.toString(tiedot.getAsiakkaanOdotusAVG()));
 			break;
 		default:
 			 kaavioSali1 = null;
