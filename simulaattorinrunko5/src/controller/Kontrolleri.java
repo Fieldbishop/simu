@@ -25,34 +25,34 @@ public class Kontrolleri implements IKontrolleri{
 	
 	private Boolean started = false;
 	//Salien asetukset defaultti arvot
-	private int[] sali1Asetukest = {150, 150, 70};
-	private int[] sali2Asetukeset = {100, 80, 30};
+	private int[] sali1Asetukset = {150, 150, 70};
+	private int[] sali2Asetukset = {100, 80, 30};
 	
 	public Kontrolleri(ISimulaattorinUI ui) {
 		this.ui = ui;
 	}
 
 	@Override
-	public int[] getSali1Asetukeset() {
-		return sali1Asetukest;
+	public int[] getSali1Asetukset() {
+		return sali1Asetukset;
 	}
 
 
 	@Override
-	public void setSali1Asetukeset(int[] sali1Asetukest) {
-		this.sali1Asetukest = sali1Asetukest;
+	public void setSali1Asetukset(int[] sali1Asetukset) {
+		this.sali1Asetukset = sali1Asetukset;
 	}
 
 
 	@Override
-	public int[] getSali2Asetukeset() {
-		return sali2Asetukeset;
+	public int[] getSali2Asetukset() {
+		return sali2Asetukset;
 	}
 
 
 	@Override
-	public void setSali2Asetukeset(int[] sali2Asetukeset) {
-		this.sali2Asetukeset = sali2Asetukeset;
+	public void setSali2Asetukset(int[] sali2Asetukset) {
+		this.sali2Asetukset = sali2Asetukset;
 	}
 		
 	@Override
@@ -163,5 +163,16 @@ public class Kontrolleri implements IKontrolleri{
 	@Override
 	public ObservableList<Tallennettava> getTulokset() {
 		return FXCollections.observableArrayList(model.readAll());
+	}
+	
+	@Override
+	public void createTulos(
+			int sisaanPaasseet1, 
+			int poisJaaneet1,
+			int sisaanPaasseet2, 
+			int poisJaaneet2,
+			double asiakkaanOdotusAVG) {
+		Tallennettava uusiTulos = new Tallennettava(sisaanPaasseet1, poisJaaneet1, sali1Asetukset[0], sali1Asetukset[1], sisaanPaasseet2, poisJaaneet2, sali2Asetukset[0], sali2Asetukset[1], asiakkaanOdotusAVG);
+		model.createEntry(uusiTulos);
 	}
 }

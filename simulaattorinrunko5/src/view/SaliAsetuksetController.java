@@ -43,11 +43,11 @@ public class SaliAsetuksetController {
     public void setSali(Paikka sali) { 
     	switch(sali) {
 		case SALI1:
-			asetukset = kontrolleri.getSali1Asetukeset();
+			asetukset = kontrolleri.getSali1Asetukset();
 			saliTeksti.setText("Sali 1");
 			break;
 		case SALI2:
-			asetukset = kontrolleri.getSali2Asetukeset();
+			asetukset = kontrolleri.getSali2Asetukset();
 			saliTeksti.setText("Sali 2");
 			break;
 		default:
@@ -73,10 +73,10 @@ public class SaliAsetuksetController {
 			
 	    	switch(this.sali) {
 			case SALI1:
-				kontrolleri.setSali1Asetukeset(asetukset);
+				kontrolleri.setSali1Asetukset(asetukset);
 				break;
 			case SALI2:
-				kontrolleri.setSali2Asetukeset(asetukset);
+				kontrolleri.setSali2Asetukset(asetukset);
 				break;
 			default:
 				break;
