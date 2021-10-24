@@ -38,6 +38,7 @@ public class TallennettavaAccessObject implements ITallennettavaDAO{
 			transaktio = istunto.beginTransaction();
 			istunto.saveOrUpdate(v);	
 			transaktio.commit();
+			istunto.close();
 			return true;
 		} catch(Exception e) {
 			if(transaktio != null) {
@@ -55,6 +56,7 @@ public class TallennettavaAccessObject implements ITallennettavaDAO{
 			Tallennettava palautettava = new Tallennettava();
 			istunto.load(palautettava, id);	
 			transaktio.commit();
+			istunto.close();
 			return palautettava;
 		} catch(Exception e) {
 			if(transaktio != null) {
@@ -74,6 +76,7 @@ public class TallennettavaAccessObject implements ITallennettavaDAO{
 			for (int i = 0; i < temp.length; i++) {
 				temp[i]=palautettavat.get(i);
 			}
+			istunto.close();
 			return temp;
 		} catch(Exception e) {
 			System.err.println("Koko databasen haku ei onnistunut: "+ e.getMessage());
@@ -103,6 +106,7 @@ public class TallennettavaAccessObject implements ITallennettavaDAO{
 			transaktio = istunto.beginTransaction();
 			istunto.delete(istunto.load(Tallennettava.class, id));	
 			transaktio.commit();
+			istunto.close();
 			return true;
 		} catch(Exception e) {
 			if(transaktio != null) {

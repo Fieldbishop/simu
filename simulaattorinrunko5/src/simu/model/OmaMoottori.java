@@ -16,6 +16,10 @@ public class OmaMoottori extends Moottori{
 	private Saapumisprosessi saapumisprosessi;
 	private ArrayList<Asiakas> asiakasRekisteri = new ArrayList<Asiakas>();
 	
+
+	private int sali2PoisJaaneetAsiakaat = 0;
+	private int sali1PoisJaaneetAsiakaat = 0;
+	
 	public OmaMoottori(IKontrolleri kontrolleri){
 		super(kontrolleri);
 		
@@ -26,8 +30,8 @@ public class OmaMoottori extends Moottori{
 		palvelupisteet[1]=new Palvelupiste(new Normal(3, 5),tapahtumalista,TapahtumanTyyppi.TURVADEP0);
 		palvelupisteet[2]=new Palvelupiste(new Normal(3, 5),tapahtumalista,TapahtumanTyyppi.TURVADEP1);
 		palvelupisteet[3]=new Palvelupiste(new Normal(15, 5),tapahtumalista,TapahtumanTyyppi.RESPADEP);
-		salit[0]=new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP1, kontrolleri.getSali1Asetukeset());
-		salit[1]=new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP2, kontrolleri.getSali2Asetukeset());
+		salit[0]=new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP1, kontrolleri.getSali1Asetukset());
+		salit[1]=new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP2, kontrolleri.getSali2Asetukset());
 		
 		saapumisprosessi = new Saapumisprosessi(new Normal(15, 5), tapahtumalista, TapahtumanTyyppi.JONOARR);
 	}
@@ -37,8 +41,8 @@ public class OmaMoottori extends Moottori{
 		//Tehdään kummallekin salille alku tapahtumat, jossa tehdään asiakkaiden tuloajat
 		salit[0].teeSalitapahtuma();
 		salit[1].teeSalitapahtuma();
-		kontrolleri.setSaliTekstit(Paikka.SALI1, Double.toString(salit[0].getAlkamisAika()), Double.toString(salit[0].getLoppuAika()));
-		kontrolleri.setSaliTekstit(Paikka.SALI2, Double.toString(salit[1].getAlkamisAika()), Double.toString(salit[1].getLoppuAika()));
+		kontrolleri.setSaliTekstit(Paikka.SALI1, String.format("%.2f",salit[0].getAlkamisAika()), String.format("%.2f",salit[0].getLoppuAika()));
+		kontrolleri.setSaliTekstit(Paikka.SALI2, String.format("%.2f",salit[1].getAlkamisAika()), String.format("%.2f",salit[1].getLoppuAika()));
 		kontrolleri.setSaliYleisöTeksti(Paikka.SALI1, 0 + "/" +  salit[0].getYleisöMaksimi());
 		kontrolleri.setSaliYleisöTeksti(Paikka.SALI2, 0 + "/" +  salit[1].getYleisöMaksimi());
 		saapumisprosessi.generoiSeuraava();
@@ -105,7 +109,7 @@ public class OmaMoottori extends Moottori{
 				if(salit[0].onLoppunut()) {
 					kontrolleri.asetaSalinTila(Paikka.SALI1, "AUKI");
 					salit[0].teeSalitapahtuma();
-					kontrolleri.setSaliTekstit(Paikka.SALI1, Double.toString(salit[0].getAlkamisAika()), Double.toString(salit[0].getLoppuAika()));
+					kontrolleri.setSaliTekstit(Paikka.SALI1, String.format("%.2f",salit[0].getAlkamisAika()), String.format("%.2f",salit[0].getLoppuAika()));
 					kontrolleri.setSaliYleisöTeksti(Paikka.SALI1, 0 + "/" +  salit[0].getYleisöMaksimi());
 				}
 				break;
@@ -121,7 +125,7 @@ public class OmaMoottori extends Moottori{
 				if(salit[1].onLoppunut()) {
 					kontrolleri.asetaSalinTila(Paikka.SALI2, "AUKI");
 					salit[1].teeSalitapahtuma();
-					kontrolleri.setSaliTekstit(Paikka.SALI2, Double.toString(salit[1].getAlkamisAika()), Double.toString(salit[1].getLoppuAika()));
+					kontrolleri.setSaliTekstit(Paikka.SALI2, String.format("%.2f",salit[1].getAlkamisAika()), String.format("%.2f",salit[1].getLoppuAika()));
 					kontrolleri.setSaliYleisöTeksti(Paikka.SALI2, 0 + "/" +  salit[1].getYleisöMaksimi());
 				}
 				
@@ -133,7 +137,6 @@ public class OmaMoottori extends Moottori{
 				a.setPoistumisaika(t.getTyyppi(), Kello.getInstance().getAika());
 				a.raportti();
 				kontrolleri.saliTyhjennys(Paikka.RESPA);
-				asiakasRekisteri.add(a);
 				break;
 		}	
 
@@ -175,17 +178,20 @@ public class OmaMoottori extends Moottori{
 				break;
 			case SALIDEP1:
 				sali1Total++;
-				sali1TotalPalveluAika += a.getPoistuminen(TapahtumanTyyppi.SALIDEP1)-a.getSaapumisaika(TapahtumanTyyppi.SALIDEP1);
+				sali1TotalPalveluAika += a.getPoistuminen(TapahtumanTyyppi.SALIDEP1)-a.getSaapumisaika(TapahtumanTyyppi.TURVADEP0);
 				break;
 			case SALIDEP2:
 				sali2Total++;
-				sali2TotalPalveluAika += a.getPoistuminen(TapahtumanTyyppi.SALIDEP2)-a.getSaapumisaika(TapahtumanTyyppi.SALIDEP2);
+				sali2TotalPalveluAika += a.getPoistuminen(TapahtumanTyyppi.SALIDEP2)-a.getSaapumisaika(TapahtumanTyyppi.TURVADEP0);
 				break;
 			default:
 				break;
 			}
 		}
+		
+		
 		kontrolleri.simulaatiLoppu(sali1Total, sali2Total, sali1TotalPalveluAika, sali2TotalPalveluAika);
+		kontrolleri.createTulos(sali1Total, sali1PoisJaaneetAsiakaat, sali2Total, sali2PoisJaaneetAsiakaat, (sali1TotalPalveluAika + sali2TotalPalveluAika) / asiakasRekisteri.size());
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		System.out.println("Tulokset:");
 		System.out.println("Total systeemissä asioineet asiakkaat: " + asiakasRekisteri.size() +
@@ -208,7 +214,7 @@ public class OmaMoottori extends Moottori{
 			case SALIDEP1:
 				if(!salit[0].onAlkanut() && !salit[0].onTäynnä()) {
 					salit[0].lisaaJonoon(asiakas);
-					kontrolleri.siirräTurvastaSaliin(piste , Paikka.SALI1);
+					kontrolleri.siirräTurvastaSaliin(piste, Paikka.SALI1);
 					kontrolleri.setSaliYleisöTeksti(Paikka.SALI1, salit[0].getSalissaOlleetMäärä() + "/" +  salit[0].getYleisöMaksimi());
 				}
 				else {
@@ -216,6 +222,7 @@ public class OmaMoottori extends Moottori{
 					asiakas.setPoistumisaika2(Kello.getInstance().getAika());
 					asiakas.raportti();
 					kontrolleri.poistaTurvasta(piste);
+					sali1PoisJaaneetAsiakaat++;
 				}
 
 				break;
@@ -230,6 +237,7 @@ public class OmaMoottori extends Moottori{
 					asiakas.setPoistumisaika2(Kello.getInstance().getAika());
 					asiakas.raportti();
 					kontrolleri.poistaTurvasta(piste);
+					sali2PoisJaaneetAsiakaat++;
 				}
 					
 				break;

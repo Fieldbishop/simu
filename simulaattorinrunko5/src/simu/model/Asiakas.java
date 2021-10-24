@@ -12,6 +12,7 @@ public class Asiakas{
 	private double saapuminen2;					//toiseen palvelupisteeseen saapuminen
 	private double poistuminen1;				//ensimmäisestä palvelupisteestä poistuminen
 	private double poistuminen2;				//toisesta palvelupisteestä poistuminen
+	
 	private int id;
 	private static int i = 1;					//asiakkaiden id numerointia ylläpitävä suure
 	private static long sum = 0;
@@ -97,5 +98,4 @@ public class Asiakas{
 		double keskiarvo = sum/id;
 		System.out.println("Asiakkaiden läpimenoaikojen keskiarvo tähän asti "+ keskiarvo);
 	}
-
 }
