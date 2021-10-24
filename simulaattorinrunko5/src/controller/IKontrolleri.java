@@ -16,8 +16,8 @@ public interface IKontrolleri {
 		public void nopeuta();
 		public void hidasta();
 		public void asetaViive(long viive);
-		public int[] getSali1Asetukeset();
-		public int[] getSali2Asetukeset();
+		public int[] getSali1Asetukset();
+		public int[] getSali2Asetukset();
 		public Boolean isStarted();
 		
 		// Rajapinta, joka tarjotaan moottorille:
@@ -31,9 +31,11 @@ public interface IKontrolleri {
 		public void laitaAikaTeksti(double aika);
 		public void asetaSalinTila(Paikka sali, String tila);
 		public void simulaatiLoppu(int sali1Käviät, int sali2Käviät, double sali1PalveluAika, double sali2PalveluAika);
-		public void setSali1Asetukeset(int[] sali1Asetukeset);
-		public void setSali2Asetukeset(int[] sali2Asetukeset);
+		public void setSali1Asetukset(int[] sali1Asetukeset);
+		public void setSali2Asetukset(int[] sali2Asetukeset);
 		public void setSaliTekstit(Paikka sali, String saliAlkaaTeksti, String saliLoppuuTeksti);
 		public void setSaliYleisöTeksti(Paikka sali, String yleisöTeksti);
 		public ObservableList<Tallennettava> getTulokset();
+		public void createTulos(int sisaanPaasseet1, int poisJaaneet1, int sisaanPaasseet2, int poisJaaneet2,
+				double asiakkaanOdotusAVG);
 }

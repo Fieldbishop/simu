@@ -3,7 +3,6 @@ package simu.model;
 import java.util.ArrayList;
 
 import controller.IKontrolleri;
-import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.framework.Kello;
 import simu.framework.Moottori;
@@ -29,6 +28,16 @@ public class OmaMoottori extends Moottori {
 	 * Lista, johon tallennetaan kaikki asiakkaat tulostuksia varten
 	 */
 	private ArrayList<Asiakas> asiakasRekisteri = new ArrayList<Asiakas>();
+	
+	/**
+	 * muuttuja ylläpitämään salista 2 myöhästyneiden asiakkaiden määrää
+	 */
+	private int sali2PoisJaaneetAsiakaat = 0;
+	
+	/**
+	 * muuttuja ylläpitämään salista 1 myöhästyneiden asiakkaiden määrää
+	 */
+	private int sali1PoisJaaneetAsiakaat = 0;
 
 	/**
 	 * Luo kaikki palvelupisteet ja luo viitteen instanssimuuttujaan
@@ -46,8 +55,8 @@ public class OmaMoottori extends Moottori {
 		palvelupisteet[1] = new Palvelupiste(new Normal(3, 5), tapahtumalista, TapahtumanTyyppi.TURVADEP0);
 		palvelupisteet[2] = new Palvelupiste(new Normal(3, 5), tapahtumalista, TapahtumanTyyppi.TURVADEP1);
 		palvelupisteet[3] = new Palvelupiste(new Normal(15, 5), tapahtumalista, TapahtumanTyyppi.RESPADEP);
-		salit[0] = new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP1, kontrolleri.getSali1Asetukeset());
-		salit[1] = new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP2, kontrolleri.getSali2Asetukeset());
+		salit[0] = new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP1, kontrolleri.getSali1Asetukset());
+		salit[1] = new Sali(tapahtumalista, TapahtumanTyyppi.SALIDEP2, kontrolleri.getSali2Asetukset());
 
 		saapumisprosessi = new Saapumisprosessi(new Normal(15, 5), tapahtumalista, TapahtumanTyyppi.JONOARR);
 	}
@@ -57,7 +66,6 @@ public class OmaMoottori extends Moottori {
 	 */
 	@Override
 	protected void alustukset() {
-
 		salit[0].teeSalitapahtuma();
 		salit[1].teeSalitapahtuma();
 		kontrolleri.setSaliTekstit(Paikka.SALI1, Double.toString(salit[0].getAlkamisAika()),
@@ -229,6 +237,7 @@ public class OmaMoottori extends Moottori {
 			}
 		}
 		kontrolleri.simulaatiLoppu(sali1Total, sali2Total, sali1TotalPalveluAika, sali2TotalPalveluAika);
+		kontrolleri.createTulos(sali1Total, sali1PoisJaaneetAsiakaat, sali2Total, sali2PoisJaaneetAsiakaat, (sali1TotalPalveluAika + sali2TotalPalveluAika) / asiakasRekisteri.size());
 		System.out.println("Simulointi päättyi kello " + Kello.getInstance().getAika());
 		System.out.println("Tulokset:");
 		System.out.println("Total systeemissä asioineet asiakkaat: " + asiakasRekisteri.size()
