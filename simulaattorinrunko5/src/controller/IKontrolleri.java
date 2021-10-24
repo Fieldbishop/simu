@@ -1,6 +1,10 @@
 package controller;
 
+import java.util.List;
+
+import javafx.collections.ObservableList;
 import simu.model.Paikka;
+import simu.model.Tallennettava;
 import simu.model.TapahtumanTyyppi;
 import simu.model.TurvatarkastusPiste;
 
@@ -31,4 +35,5 @@ public interface IKontrolleri {
 		public void setSali2Asetukeset(int[] sali2Asetukeset);
 		public void setSaliTekstit(Paikka sali, String saliAlkaaTeksti, String saliLoppuuTeksti);
 		public void setSaliYleisöTeksti(Paikka sali, String yleisöTeksti);
+		public ObservableList<Tallennettava> getTulokset();
 }

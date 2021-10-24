@@ -152,6 +152,37 @@ public class SimulaattoriOverviewController extends Application implements ISimu
         }
     }
     
+    /**
+     * Avaa vertailu ikkunan.
+     */
+    public void openAjoVertailu() {
+		if(kontrolleri == null) {
+			kontrolleri = new Kontrolleri(this);
+		}
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(SimulaattoriOverviewController.class.getResource("../view/Vertailuview.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage vertailuStage = new Stage();
+            vertailuStage.setTitle("Ajo vertailu");
+            vertailuStage.initModality(Modality.WINDOW_MODAL);
+            vertailuStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            vertailuStage.setScene(scene);
+            vertailuStage.setResizable(false);
+
+            
+            VertailuController controller = loader.getController();
+            controller.setVertailuStage(vertailuStage);
+            controller.setKontrolleri(kontrolleri);
+            
+            vertailuStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     @FXML
     private void handleSali1Asetukset() {
     	openSaliAsetukset(Paikka.SALI1);
@@ -160,6 +191,11 @@ public class SimulaattoriOverviewController extends Application implements ISimu
     @FXML
     private void handleSali2Asetukset() {
     	openSaliAsetukset(Paikka.SALI2);
+    }
+    
+    @FXML
+    private void handleVertailuNappi() {
+    	openAjoVertailu();
     }
     
     @FXML

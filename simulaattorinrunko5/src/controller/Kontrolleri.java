@@ -1,10 +1,18 @@
 package controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import simu.framework.IMoottori;
 import simu.framework.Kello;
+import simu.model.ITallennettavaDAO;
 import simu.model.OmaMoottori;
 import simu.model.Paikka;
+import simu.model.Tallennettava;
+import simu.model.TallennettavaAccessObject;
 import simu.model.TapahtumanTyyppi;
 import simu.model.TurvatarkastusPiste;
 import view.ISimulaattorinUI;
@@ -13,6 +21,7 @@ public class Kontrolleri implements IKontrolleri{
 	
 	private IMoottori moottori; 
 	private ISimulaattorinUI ui;
+	private ITallennettavaDAO model = new TallennettavaAccessObject();
 	
 	private Boolean started = false;
 	//Salien asetukset defaultti arvot
@@ -149,5 +158,10 @@ public class Kontrolleri implements IKontrolleri{
 	@Override
 	public void setSaliYleisöTeksti(Paikka sali, String yleisöTeksti) {
 		Platform.runLater(()->ui.setSaliYleisöTeksti(sali, yleisöTeksti)); 
+	}
+	
+	@Override
+	public ObservableList<Tallennettava> getTulokset() {
+		return FXCollections.observableArrayList(model.readAll());
 	}
 }
